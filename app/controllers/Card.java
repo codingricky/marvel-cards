@@ -14,4 +14,8 @@ public class Card {
         final Image thumbnail = marvelCharacter.getThumbnail();
         return thumbnail.getPath() + "." + thumbnail.getExtension();
     }
+
+    public boolean isImageAvailable() {
+        return marvelCharacter != null && !getImagePath().endsWith("image_not_available.jpg");
+    }
 }
