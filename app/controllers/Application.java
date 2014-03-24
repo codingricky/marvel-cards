@@ -12,16 +12,19 @@ import java.util.List;
 
 public class Application extends Controller {
 
+    private static final int ATTEMPTS = 100;
+    private static final int MAX_CARDS = 10;
+
     public static Result index() {
         RestClient restClient = new RestClient(Keys.PRIVATE_KEY, Keys.PUBLIC_KEY);
         List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < ATTEMPTS; i++) {
             final Card card = new Card(getCharacter(restClient));
             if (card.isImageAvailable()) {
                 cards.add(card);
             }
 
-            if (cards.size() == 10) {
+            if (cards.size() == MAX_CARDS) {
                 return ok(index.render(cards));
             }
         }
