@@ -2,6 +2,7 @@ package controllers;
 
 import com.github.codingricky.marvel.RestClient;
 import com.github.codingricky.marvel.model.MarvelCharacter;
+import com.github.codingricky.marvel.parameter.CharacterParameterBuilder;
 import org.apache.commons.lang3.RandomUtils;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -33,7 +34,9 @@ public class Application extends Controller {
 
     private static MarvelCharacter getCharacter(RestClient restClient) {
         try {
-            final com.github.codingricky.marvel.model.Result<MarvelCharacter> character = restClient.getCharacter(RandomUtils.nextInt(1009100, 1010000));
+            final int offSet = RandomUtils.nextInt(0, 1400);
+            final com.github.codingricky.marvel.model.Result<MarvelCharacter> character =
+                    restClient.getCharacters(new CharacterParameterBuilder().withOffset(offSet).withLimit(1).create());
             return character.getData().getResults().get(0);
         } catch (Exception e) {
             e.printStackTrace();
